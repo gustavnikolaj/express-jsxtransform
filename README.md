@@ -6,8 +6,10 @@ work with any middleware further down the stack, even an http proxy.
 
 The response will be rewritten under these circumstances:
 
-* If the response is served with a `.js` extension and has the
+* If the response is a file with the `.js` extension and has the
 `/** @jsx ... */` annotation on the first line.
+* If the response is a file with the `.jsx` extension. In this case
+the annotation is optional.
 
 jsxtranform plays nice with conditional GET. If the original response
 has an ETag, jsxtransform will add to it so the ETag of the compiled

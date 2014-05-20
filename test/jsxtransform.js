@@ -60,4 +60,32 @@ describe('test server with jsxtransform', function () {
                ');',
                done);
     });
+    it('should not transform a js file with jsx content and no jsx annotation', function (done) {
+        expect('/helloWorldJsxNoAnnotation.js',
+               'to respond',
+               'React.renderComponent(',
+               '  <h1>Hello, world!</h1>,',
+               '  document.getElementById(\'example\')',
+               ');',
+               done);
+    });
+    it('should transform a jsx file with jsx content and no jsx annotation', function (done) {
+        expect('/helloWorldJsx.jsx',
+               'to respond',
+               'React.renderComponent(',
+               '  React.DOM.h1(null, "Hello, world!"),',
+               '  document.getElementById(\'example\')',
+               ');',
+               done);
+    });
+    it('should transform a jsx file with jsx content and jsx annotation', function (done) {
+        expect('/helloWorldJsxWithAnnotation.jsx',
+               'to respond',
+               '/** @jsx React.DOM */',
+               'React.renderComponent(',
+               '  React.DOM.h1(null, "Hello, world!"),',
+               '  document.getElementById(\'example\')',
+               ');',
+               done);
+    });
 });

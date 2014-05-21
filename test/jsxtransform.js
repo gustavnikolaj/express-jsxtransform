@@ -88,4 +88,31 @@ describe('test server with jsxtransform', function () {
                ');',
                done);
     });
+    it('should behave when it gets an error', function (done) {
+        expect('helloWorldJsxSyntaxError.jsx',
+               'to respond',
+               '/**********************************************************',
+               ' * Parse Error: Line 3: Unexpected token ,',
+               ' * In file: /helloWorldJsxSyntaxError.jsx',
+               ' *********************************************************/',
+               ';(function () {',
+               '    var element = document.createElement("DIV");',
+               '    element.style.position = "absolute";',
+               '    element.style.top = 0;',
+               '    element.style.left = 0;',
+               '    element.style.right = 0;',
+               '    element.style.bottom = 0;',
+               '    element.style.backgroundColor = "white";',
+               '    element.style.zIndex = 999999;',
+               '    element.style.fontSize = "24px";',
+               '    element.style.color = "red";',
+               '    element.style.padding = "20px";',
+               '    element.style.textAlign = "left";',
+               '    element.style.whiteSpace = "pre";',
+               '    element.style.fontFamily = "monospace";',
+               '    element.innerText = "Parse Error: Line 3: Unexpected token ,\\nIn file: /helloWorldJsxSyntaxError.jsx";',
+               '    document.body.appendChild(element);',
+               '}());',
+               done);
+    });
 });

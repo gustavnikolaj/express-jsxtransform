@@ -1,5 +1,7 @@
 # express-jsxtransform
 
+[![NPM version](https://badge.fury.io/js/express-jsxtransform.svg)](http://badge.fury.io/js/express-jsxtransform)
+
 Middleware that compiles jsx on-the-fly. Intended to be used in a
 development setting with the `express.static` middleware, but should
 work with any middleware further down the stack, even an http proxy.

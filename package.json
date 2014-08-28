@@ -21,7 +21,6 @@
   "license": "BSD",
   "dependencies": {
     "express-hijackresponse": "=0.1.2",
-    "bufferjs": "=2.0.0",
     "react-tools": "=0.10.0"
   },
   "devDependencies": {

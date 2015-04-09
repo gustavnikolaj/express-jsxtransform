@@ -20,7 +20,7 @@
   "author": "Gustav Nikolaj Olsen <gustavnikolaj@gmail.com>",
   "license": "BSD",
   "dependencies": {
-    "express-hijackresponse": "0.2.1",
+    "express-interceptor": "1.0.0",
     "react-tools": "=0.10.0"
   },
   "devDependencies": {

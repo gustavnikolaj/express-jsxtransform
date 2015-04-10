@@ -55,7 +55,7 @@ describe('test server with jsxtransform', function () {
                'to respond',
                '/** @jsx React.DOM */',
                'React.renderComponent(',
-               '  React.DOM.h1(null, "Hello, world!"),',
+               '  React.createElement("h1", null, "Hello, world!"),',
                '  document.getElementById(\'example\')',
                ');',
                done);
@@ -73,7 +73,7 @@ describe('test server with jsxtransform', function () {
         expect('/helloWorldJsx.jsx',
                'to respond',
                'React.renderComponent(',
-               '  React.DOM.h1(null, "Hello, world!"),',
+               '  React.createElement("h1", null, "Hello, world!"),',
                '  document.getElementById(\'example\')',
                ');',
                done);
@@ -83,7 +83,7 @@ describe('test server with jsxtransform', function () {
                'to respond',
                '/** @jsx React.DOM */',
                'React.renderComponent(',
-               '  React.DOM.h1(null, "Hello, world!"),',
+               '  React.createElement("h1", null, "Hello, world!"),',
                '  document.getElementById(\'example\')',
                ');',
                done);

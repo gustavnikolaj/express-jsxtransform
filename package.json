@@ -26,11 +26,11 @@
     "react-tools": ">= 0.13.1"
   },
   "devDependencies": {
-    "express": "=2.5.11",
-    "mocha": "=1.18.2",
-    "passerror": "=1.0.1",
-    "react-tools": "=0.13.1",
-    "request": "=2.11.4",
-    "unexpected": "=3.1.7"
+    "express": "2.5.11",
+    "mocha": "1.18.2",
+    "passerror": "1.0.1",
+    "react-tools": "0.13.1",
+    "request": "2.11.4",
+    "unexpected": "3.1.7"
   }
 }

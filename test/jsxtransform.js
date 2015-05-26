@@ -19,10 +19,20 @@ var expect = require('unexpected')
 
 describe('jsxtransform', function () {
     it('should not mess with request for txt file', function () {
-        return expect('/something.txt', 'to yield response', 'foo\n');
+        return expect('/something.txt', 'to yield response', {
+            headers: {
+                'Content-Type': 'text/plain; charset=UTF-8'
+            },
+            body: 'foo\n'
+        });
     });
     it('should not mess with request for js file that contains no jsx syntax', function () {
-        return expect('/something.js', 'to yield response', 'foo();\n');
+        return expect('/something.js', 'to yield response', {
+            headers: {
+                'Content-Type': 'text/javascript; charset=UTF-8'
+            },
+            body: 'foo();\n'
+        });
     });
     it('should transform a js file with jsx content and jsx annotation', function () {
         return expect('/helloWorldJsx.js', 'to yield response', [

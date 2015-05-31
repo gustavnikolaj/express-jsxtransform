@@ -5,8 +5,7 @@
   "main": "lib/jsxtransform.js",
   "scripts": {
     "lint": "jshint .",
-    "test": "mocha",
-    "prepublish": "mocha"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",

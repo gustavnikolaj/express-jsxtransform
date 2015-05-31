@@ -31,9 +31,7 @@
     "jshint": "2.7.0",
     "messy": "6.2.0",
     "mocha": "1.18.2",
-    "passerror": "1.0.1",
     "react-tools": "0.13.1",
-    "request": "2.11.4",
     "unexpected": "7.5.0",
     "unexpected-express": "6.3.1",
     "unexpected-messy": "3.0.4"

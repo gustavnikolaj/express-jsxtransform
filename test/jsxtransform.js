@@ -1,8 +1,6 @@
-/*global describe,it,before,after*/
+/* global describe,it */
 var express = require('express');
 var Path = require('path');
-var request = require('request');
-var passError = require('passerror');
 var jsxtransform = require('../lib/jsxtransform');
 var root = Path.resolve(__dirname, 'root');
 var expect = require('unexpected')

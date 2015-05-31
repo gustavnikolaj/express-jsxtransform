@@ -4,6 +4,7 @@
   "description": "Express middleware that transforms jsx on the way out.",
   "main": "lib/jsxtransform.js",
   "scripts": {
+    "lint": "jshint .",
     "test": "mocha",
     "prepublish": "mocha"
   },
@@ -27,6 +28,7 @@
   },
   "devDependencies": {
     "express": "4.12.4",
+    "jshint": "2.7.0",
     "messy": "6.2.0",
     "mocha": "1.18.2",
     "passerror": "1.0.1",

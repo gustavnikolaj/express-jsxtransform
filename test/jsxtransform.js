@@ -1,14 +1,16 @@
 /* global describe,it */
 var express = require('express');
-var Path = require('path');
 var jsxtransform = require('../lib/jsxtransform');
-var root = Path.resolve(__dirname, 'root');
+
+var app = express()
+    .use(jsxtransform())
+    .use(express['static']('/data'));
+
 var expect = require('unexpected')
+    .clone()
+    .installPlugin(require('unexpected-fs'))
     .installPlugin(require('unexpected-express'))
     .addAssertion('to yield response', function (expect, subject, value) {
-        var app = express()
-            .use(jsxtransform())
-            .use(express['static'](root));
         return expect(app, 'to yield exchange', {
             request: subject,
             response: value
@@ -17,7 +19,11 @@ var expect = require('unexpected')
 
 describe('jsxtransform', function () {
     it('should not mess with request for txt file', function () {
-        return expect('/something.txt', 'to yield response', {
+        return expect('/something.txt', 'with fs mocked out', {
+            '/data': {
+                'something.txt': 'foo\n'
+            }
+        }, 'to yield response', {
             headers: {
                 'Content-Type': 'text/plain; charset=UTF-8'
             },
@@ -25,7 +31,11 @@ describe('jsxtransform', function () {
         });
     });
     it('should not mess with request for js file that contains no jsx syntax', function () {
-        return expect('/something.js', 'to yield response', {
+        return expect('/something.js', 'with fs mocked out', {
+            '/data': {
+                'something.js': 'foo();\n'
+            }
+        }, 'to yield response', {
             headers: {
                 'Content-Type': 'text/javascript; charset=UTF-8'
             },
@@ -33,45 +43,88 @@ describe('jsxtransform', function () {
         });
     });
     it('should transform a js file with jsx content and jsx annotation', function () {
-        return expect('/helloWorldJsx.js', 'to yield response', [
+        return expect('/helloWorldJsx.js', 'with fs mocked out', {
+            '/data': {
+                'helloWorldJsx.js': [
+                    '/** @jsx React.DOM */',
+                    'React.renderComponent(',
+                    '  <h1>Hello, world!</h1>,',
+                    '  document.getElementById(\'example\')',
+                    ');'
+                ].join('\n')
+            }
+        }, 'to yield response', [
             '/** @jsx React.DOM */',
             'React.renderComponent(',
             '  React.createElement("h1", null, "Hello, world!"),',
             '  document.getElementById(\'example\')',
-            ');',
-            ''
+            ');'
         ].join('\n'));
     });
     it('should not transform a js file with jsx content and no jsx annotation', function () {
-        return expect('/helloWorldJsxNoAnnotation.js', 'to yield response', [
+        return expect('/helloWorldJsxNoAnnotation.js', 'with fs mocked out', {
+            '/data': {
+                'helloWorldJsxNoAnnotation.js': [
+                    "React.renderComponent(",
+                    "  <h1>Hello, world!</h1>,",
+                    "  document.getElementById('example')",
+                    ");"
+                ].join('\n')
+            }
+        }, 'to yield response', [
             'React.renderComponent(',
             '  <h1>Hello, world!</h1>,',
             '  document.getElementById(\'example\')',
-            ');',
-            ''
+            ');'
         ].join('\n'));
     });
     it('should transform a jsx file with jsx content and no jsx annotation', function () {
-        return expect('/helloWorldJsx.jsx', 'to yield response', [
+        return expect('/helloWorldJsx.jsx', 'with fs mocked out', {
+            '/data': {
+                'helloWorldJsx.jsx': [
+                    "React.renderComponent(",
+                    "  <h1>Hello, world!</h1>,",
+                    "  document.getElementById('example')",
+                    ");"
+                ].join('\n')
+            }
+        }, 'to yield response', [
             'React.renderComponent(',
             '  React.createElement("h1", null, "Hello, world!"),',
             '  document.getElementById(\'example\')',
-            ');',
-            '',
+            ');'
         ].join('\n'));
     });
     it('should transform a jsx file with jsx content and jsx annotation', function () {
-        return expect('/helloWorldJsxWithAnnotation.jsx', 'to yield response', [
+        return expect('/helloWorldJsxWithAnnotation.jsx', 'with fs mocked out', {
+            '/data': {
+                'helloWorldJsxWithAnnotation.jsx': [
+                    "/** @jsx React.DOM */",
+                    "React.renderComponent(",
+                    "  <h1>Hello, world!</h1>,",
+                    "  document.getElementById('example')",
+                    ");"
+                ].join('\n')
+            }
+        }, 'to yield response', [
             '/** @jsx React.DOM */',
             'React.renderComponent(',
             '  React.createElement("h1", null, "Hello, world!"),',
             '  document.getElementById(\'example\')',
-            ');',
-            ''
+            ');'
         ].join('\n'));
     });
     it('should behave when it gets an error', function () {
-        return expect('/helloWorldJsxSyntaxError.jsx', 'to yield response', [
+        return expect('/helloWorldJsxSyntaxError.jsx', 'with fs mocked out', {
+            '/data': {
+                'helloWorldJsxSyntaxError.jsx' : [
+                    "React.renderComponent(",
+                    "  <h1>Hello, world!</h1,",
+                    "  document.getElementById('example')",
+                    ");"
+                ].join('\n')
+            }
+        }, 'to yield response', [
             '/**********************************************************',
             ' * Parse Error: Line 3: Unexpected token ,',
             ' * In file: /helloWorldJsxSyntaxError.jsx',

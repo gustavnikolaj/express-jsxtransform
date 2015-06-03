@@ -42,6 +42,133 @@ describe('jsxtransform', function () {
             body: 'foo();\n'
         });
     });
+    it('should set a ETag with a suffix of -jsxtransform when requesting a .jsx file', function () {
+        return expect('/something.jsx', 'with fs mocked out', {
+            '/data': {
+                'something.jsx': ''
+            }
+        }, 'to yield response', {
+            headers: {
+                'ETag': /-jsxtransform"$/
+            }
+        });
+    });
+    it('should set a ETag with a suffix of -jsxtransform when requesting a .js file with a jsx annotation', function () {
+        return expect('/something.js', 'with fs mocked out', {
+            '/data': {
+                'something.js': '/** @jsx React.DOM */\nfoo();\n'
+            }
+        }, 'to yield response', {
+            headers: {
+                'ETag': /-jsxtransform"$/
+            }
+        });
+    });
+    it('should not set a ETag with a suffix of -jsxtransform when requesting a .js file without a jsx annotation', function () {
+        return expect('/something.js', 'with fs mocked out', {
+            '/data': {
+                'something.js': 'foo();\n'
+            }
+        }, 'to yield response', {
+            headers: {
+                'ETag': /-[0-9]+"$/
+            }
+        });
+    });
+    it('should return 304 for a request that has a matching ETag in if-none-match', function () {
+        var mockFs = {
+            '/data': {
+                'foobar.jsx': {
+                    _isFile: true,
+                    mtime: new Date(1),
+                    content: 'foo'
+                }
+            }
+        };
+        return expect('/foobar.jsx', 'with fs mocked out', mockFs, 'to yield response', {
+            statusCode: 200,
+            headers: {
+                ETag: /^W\/".*-jsxtransform"$/
+            },
+            body: 'foo'
+        }).then(function (context) {
+            var etag = context.httpResponse.headers.get('ETag');
+            return expect({
+                url: '/foobar.jsx',
+                headers: {
+                    'If-None-Match': etag
+                }
+            }, 'with fs mocked out', mockFs, 'to yield response', {
+                statusCode: 304,
+                headers: {
+                    ETag: etag
+                }
+            });
+        });
+    });
+    it('should return 200 for a request that has an invalid ETag in if-none-match', function () {
+        return expect('/foobar.jsx', 'with fs mocked out', {
+            '/data': {
+                'foobar.jsx': {
+                    _isFile: true,
+                    mtime: new Date(1),
+                    content: 'foo'
+                }
+            }
+        }, 'to yield response', {
+            statusCode: 200,
+            headers: {
+                ETag: /^W\/".*-jsxtransform"$/
+            },
+            body: 'foo'
+        }).then(function (context) {
+            var etag = context.httpResponse.headers.get('ETag');
+            return expect({
+                url: '/foobar.jsx',
+                headers: {
+                    'If-None-Match': etag
+                }
+            }, 'with fs mocked out', {
+                '/data': {
+                    'foobar.jsx': {
+                        _isFile: true,
+                        mtime: new Date(10),
+                        content: 'foobar'
+                    }
+                }
+            }, 'to yield response', {
+                statusCode: 200,
+                body: 'foobar'
+            });
+        });
+    });
+    it('should return 200 for a request that has an ETag in if-none-match with no tag from jsxtransformer', function () {
+        var mockFs = {
+            '/data': {
+                'foobar.jsx': {
+                    _isFile: true,
+                    mtime: new Date(1),
+                    content: 'foo'
+                }
+            }
+        };
+        return expect('/foobar.jsx', 'with fs mocked out', mockFs, 'to yield response', {
+            statusCode: 200,
+            body: 'foo'
+        }).then(function (context) {
+            var etag = context.httpResponse.headers.get('ETag');
+            etag = etag.replace(/-jsxtransform"$/, '"');
+            return expect({
+                url: '/foobar.jsx',
+                headers: {
+                    'If-None-Match': etag
+                }
+            }, 'with fs mocked out', mockFs, 'to yield response', {
+                statusCode: 200,
+                body: 'foo'
+            });
+        });
+    });
     it('should transform a js file with jsx content and jsx annotation', function () {
         return expect('/helloWorldJsx.js', 'with fs mocked out', {
             '/data': {

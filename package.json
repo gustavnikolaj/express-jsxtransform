@@ -6,7 +6,8 @@
   "scripts": {
     "coverage": "istanbul --include-all-sources cover _mocha",
     "lint": "jshint . && jscs .",
-    "test": "mocha"
+    "test": "mocha",
+    "travis": "npm run lint && npm run coverage"
   },
   "repository": {
     "type": "git",
@@ -27,6 +28,7 @@
     "react-tools": ">= 0.13.1"
   },
   "devDependencies": {
+    "coveralls": "2.11.2",
     "express": "4.12.4",
     "istanbul": "0.3.14",
     "jscs": "1.13.1",

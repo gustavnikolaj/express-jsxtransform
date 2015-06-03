@@ -1,7 +1,8 @@
 # express-jsxtransform
 
-[![NPM version](https://badge.fury.io/js/express-jsxtransform.svg)](http://badge.fury.io/js/express-jsxtransform)
+[![NPM version](https://badge.fury.io/js/express-jsxtransform.svg)](https://www.npmjs.com/package/express-jsxtransform)
 [![Build Status](https://travis-ci.org/gustavnikolaj/express-jsxtransform.svg?branch=master)](https://travis-ci.org/gustavnikolaj/express-jsxtransform)
+[![Coverage Status](https://coveralls.io/repos/gustavnikolaj/express-jsxtransform/badge.svg?branch=master)](https://coveralls.io/r/gustavnikolaj/express-jsxtransform?branch=master)
 [![Dependency Status](https://david-dm.org/gustavnikolaj/express-jsxtransform.png)](https://david-dm.org/gustavnikolaj/express-jsxtransform)
 
 Middleware that compiles jsx on-the-fly. Intended to be used in a

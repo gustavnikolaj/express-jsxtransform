@@ -22,7 +22,7 @@
   "author": "Gustav Nikolaj Olsen <gustavnikolaj@gmail.com>",
   "license": "BSD",
   "dependencies": {
-    "express-interceptor": "1.0.0"
+    "express-interceptor": "1.1.0"
   },
   "peerDependencies": {
     "react-tools": ">= 0.13.1"

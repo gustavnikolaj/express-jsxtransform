@@ -23,7 +23,7 @@
   "author": "Gustav Nikolaj Olsen <gustavnikolaj@gmail.com>",
   "license": "BSD",
   "dependencies": {
-    "hijackresponse": "0.0.1"
+    "hijackresponse": "1.0.0"
   },
   "peerDependencies": {
     "react-tools": ">= 0.13.1"

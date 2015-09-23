@@ -1,6 +1,6 @@
 {
   "name": "express-jsxtransform",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "Express middleware that transforms jsx on the way out.",
   "main": "lib/jsxtransform.js",
   "scripts": {

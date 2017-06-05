@@ -1,3 +1,12 @@
+### Important!
+
+This module is no longer relevant and will likely not receive any
+further updates. It served its purpose at the time, but the React
+framework has since moved on and using [babel](https://babeljs.io/)
+is now the approach that they suggest. This tool focused on offering
+a nice development workflow. For a similar experience you could go
+with webpack-dev-server and babel.
+
 # express-jsxtransform
 
 [![NPM version](https://badge.fury.io/js/express-jsxtransform.svg)](https://www.npmjs.com/package/express-jsxtransform)
